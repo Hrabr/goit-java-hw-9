@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class FrequencyWords {
-    private static final String PATH = "src/main/resources/words.txt";
+    private static final String PATH = "src/Store/words.txt";
 
     public static void main(String[] args) {
         File file = new File(PATH);
@@ -29,12 +29,16 @@ public class FrequencyWords {
             }
         }
 
-        for (Map.Entry<String, Integer> map : maplist.entrySet()) {
-            System.out.print(map.getKey()+" ");
-            System.out.println(map.getValue());
-            System.out.println();
-        }
+        maplist = maplist.entrySet().stream().sorted(Comparator.comparing(
+                Map.Entry<String, Integer>::getValue).reversed()).collect(
+                LinkedHashMap<String, Integer>::new,
+                (map1, e) -> map1.put(e.getKey(), e.getValue()),
+                LinkedHashMap::putAll);
+
+        maplist.forEach((k,v)->{System.out.println(k+" "+v);System.out.println();});
+
     }
+
 
     private static void read(List<String> list, File file) {
 
@@ -44,7 +48,7 @@ public class FrequencyWords {
             while (valueRead != null) {
                 String[] value = valueRead.split(" ");
                 for (int i = 0; i < value.length; i++) {
-                    if (!value[0].equals("")) {
+                    if (!value[i].equals("")) {
                         list.add(value[i]);
                     }
                 }
