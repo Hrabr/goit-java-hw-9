@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class FrequencyWords {
-    private static final String PATH = "src/Store/words.txt";
+    private static final String PATH = "src/main/resources/words.txt";
 
     public static void main(String[] args) {
         File file = new File(PATH);
